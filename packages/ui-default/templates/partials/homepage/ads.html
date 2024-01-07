@@ -1,0 +1,101 @@
+<style>
+    /* 手动轮播样式 */
+    .banner-container {
+        width: 850px;
+        height: 300px;
+        margin: 1rem auto;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .banner-container .banner-img-container {
+        width: 2550px;
+        height: 300px;
+        overflow: hidden;
+        position: absolute;
+        display: flex;
+        transition: transform 0.6s ease;
+    }
+
+    .banner-container .banner-img-container img {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* 轮播图圆点样式 */
+    .banner-container a {
+        width: 16px;
+        height: 16px;
+        background: #b3b3b3;
+        position: absolute;
+        bottom: 1rem;
+        border-radius: 100%;
+        margin: 0;
+        z-index: 1;
+    }
+
+    .banner-container input {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        bottom: 1rem;
+        margin: 0;
+        cursor: pointer;
+        z-index: 2;
+        opacity: 0;
+    }
+
+    /* 设置导航圆点偏移量（居中布局）*/
+    #banner-control-1,
+    #banner-control-1+.banner-nav-a {
+        left: 45%;
+    }
+
+    #banner-control-2,
+    #banner-control-2+.banner-nav-a {
+        left: 50%;
+    }
+
+    #banner-control-3,
+    #banner-control-3+.banner-nav-a {
+        left: 55%;
+    }
+
+    /* 设置高亮 */
+    /*当 input 被选中时 他的兄弟级a标签高亮展示*/
+    input:checked+.banner-nav-a {
+        background-color: #3170cf;
+    }
+
+    /* 设置轮播图动画 */
+    #banner-control-1:checked~.banner-img-container {
+        transform: translateX(0px);
+    }
+
+    #banner-control-2:checked~.banner-img-container {
+        transform: translateX(-850px);
+    }
+
+    #banner-control-3:checked~.banner-img-container {
+        transform: translateX(-1700px);
+    }
+</style>
+<div class="section nojs--hide">
+    <div class="banner-container">
+        <!-- 这里利用input的checked状态来为a标签添加选中状态 -->
+        <!-- 布局方式采用的是 input + a 标签，不可以添加父级，不然css无法选择到 banner-img-container -->
+        <!-- 轮播图圆点 -->
+        <input type="radio" name="radio-set" checked="checked" id="banner-control-1">
+        <a class="banner-nav-a" href="#banner01"></a>
+        <input type="radio" name="radio-set" id="banner-control-2">
+        <a class="banner-nav-a" href="#banner02"></a>
+        <input type="radio" name="radio-set" id="banner-control-3">
+        <a class="banner-nav-a" href="#banner03"></a>
+        <!-- 轮播图图片容器 -->
+        <div class="banner-img-container">
+            <img id="banner01" src="http://118.195.142.166/file/2/page1.png" alt="" href="/blog/3/658ec986a0c4aa4212bf3993">
+            <img id="banner02" src="http://118.195.142.166/file/2/page2.png" alt="" href="/discuss/658ecdc02d2b991ce87ff4ad">
+            <img id="banner03" src="http://118.195.142.166/file/2/page3.png" alt="" href="/discuss/658ecc6f8b33ae193011c080">
+        </div>
+    </div>
+</div>

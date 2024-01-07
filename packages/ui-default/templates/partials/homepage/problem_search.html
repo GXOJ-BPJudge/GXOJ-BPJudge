@@ -1,13 +1,17 @@
 <div class="section side">
   <div class="section__header">
-    <h1 class="section__title">{{ _('Search') }}</h1>
+    <h1 class="section__title">{{ _('skip') }}</h1>
   </div>
   <form method="get" action="p">
     <div class="section__body">
       <label>
-        <input name="q" type="text" class="textbox" value="" placeholder="1001">
+        <input name="q" type="text" class="textbox" value="" placeholder="A1001">
       </label>
       <button type="submit" class="primary button">{{ _('Search') }}</button>
+      &nbsp;&nbsp;
+      <a href="{{ url('problem_random', query={q:qs}) if qs else url('problem_random') }}" class="primary button" target="_blank">
+        <span class="icon icon-feeling-lucky"></span> {{ _('Lucky') }}
+      </a>
     </div>
   </form>
 </div>
