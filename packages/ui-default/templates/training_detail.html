@@ -21,13 +21,13 @@
         <li class="menu__item enroll_user_menu_item" data-uid="{{ uid }}" data-uname="{{ udoc.uname }}" {% if handler.user.hasPerm(perm.PERM_VIEW_DISPLAYNAME) and udoc.displayName %}data-displayname="{{ udoc.displayName }}"{% endif %}>
           <a href="./{{ tdoc._id }}?uid={{ uid }}" class="menu__link{% if (handler.request.query.uid or handler.user._id) == uid %} active{% endif %}">
             <span class="user-profile-link">
-              <img class="small user-profile-avatar v-center" loading="lazy" src="{{ avatarUrl(udoc.avatar|default('')) }}" width="20" height="20">
               <span class="user-profile-name">
-                {% if handler.user.hasPerm(perm.PERM_VIEW_DISPLAYNAME) and udoc.displayName and udoc.displayName != udoc.uname %}
-                  {{ udoc.displayName }} ({{ udoc.uname }})
+                {% if udoc.hasPriv(PRIV.PRIV_MOD_BADGE) or udoc.hasPerm(perm.PERM_MOD_BADGE) %}
+                  {% set modType = 1 %}
                 {% else %}
-                  {{ udoc.uname }}
+                  {% set modType = 0 %}
                 {% endif %}
+                {{ user.render_inline(udoc, badge=false, noLink=true, isModType=modType) }}
               </span>
             </span>
           </a>

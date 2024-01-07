@@ -375,11 +375,13 @@ class UserModel {
     }
 
     static async getListForRender(domainId: string, uids: number[]) {
-        const [udocs, vudocs, dudocs] = await Promise.all([
-            UserModel.getMulti({ _id: { $in: uids } }, ['_id', 'uname', 'mail', 'avatar', 'school', 'studentId']).toArray(),
+        const [vudocs, dudocs] = await Promise.all([
             collV.find({ _id: { $in: uids } }).toArray(),
             domain.getDomainUserMulti(domainId, uids).project({ uid: true, displayName: true }).toArray(),
         ]);
+        const udocs = [];
+        // eslint-disable-next-line no-await-in-loop
+        for (const i of uids) udocs.push(await this.getById(domainId, i));
         const udict = {};
         for (const udoc of udocs) udict[udoc._id] = udoc;
         for (const udoc of vudocs) udict[udoc._id] = udoc;

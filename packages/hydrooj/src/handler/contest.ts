@@ -692,7 +692,10 @@ export class ContestUserHandler extends ContestManagementBaseHandler {
             tsdoc.endAt = (this.tdoc.duration && tsdoc.startAt) ? moment(tsdoc.startAt).add(this.tdoc.duration, 'hours').toDate() : null;
         }
         const udict = await user.getListForRender(domainId, [this.tdoc.owner, ...tsdocs.map((i) => i.uid)]);
-        this.response.body = { tdoc: this.tdoc, tsdocs, udict };
+        const udoc = await user.getById(domainId, this.tdoc.owner);
+        this.response.body = {
+            tdoc: this.tdoc, tsdocs, udict, udoc,
+        };
         this.response.pjax = 'partials/contest_user.html';
         this.response.template = 'contest_user.html';
     }

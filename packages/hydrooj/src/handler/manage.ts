@@ -290,8 +290,13 @@ class SystemUserPrivHandler extends SystemHandler {
         const defaultPriv = system.get('default.priv');
         const udocs = await user.getMulti({ _id: { $gte: -1000, $ne: 1 }, priv: { $nin: [0, defaultPriv] } }).limit(1000).sort({ _id: 1 }).toArray();
         const banudocs = await user.getMulti({ _id: { $gte: -1000, $ne: 1 }, priv: 0 }).limit(1000).sort({ _id: 1 }).toArray();
+        const udict = [];
+        // eslint-disable-next-line no-await-in-loop
+        for (const udoc of udocs) udict.push(await user.getById('system', udoc._id));
+        // eslint-disable-next-line no-await-in-loop
+        for (const udoc of banudocs) udict.push(await user.getById('system', udoc._id));
         this.response.body = {
-            udocs: [...udocs, ...banudocs],
+            udocs: udict,
             defaultPriv,
             Priv,
         };

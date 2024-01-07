@@ -19,8 +19,7 @@
             </div>
             <div class="media__body profile-header__main">
               <h1>
-                {{ udoc['uname'] }}
-                {% if handler.user.hasPerm(perm.PERM_VIEW_DISPLAYNAME) and udoc.displayName %}<small>({{ udoc['displayName'] }})</small>{% endif %}
+                {{ user.render_inline(udoc, avatar=false, modbadge=false, userProfile=true) }}
               </h1>
               <p>
                 {{ _('UID') }}: {{ udoc['_id'] }},
